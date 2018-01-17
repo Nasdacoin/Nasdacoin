@@ -1,0 +1,25 @@
+#!/usr/bin/make -f
+# -*- mode: makefile; coding: utf-8 -*-
+
+DEB_INSTALL_EXAMPLES_Nasdacoind += debian/examples/*
+DEB_INSTALL_MANPAGES_Nasdacoind += debian/manpages/*
+
+%:
+	dh --with bash-completion $@
+
+override_dh_auto_build:
+	cd src; $(MAKE) -f makefile.unix Nasdacoind USE_ASM=1 USE_LEVELDB=1
+	$(MAKE)
+
+override_dh_auto_clean:
+	if [ -f Makefile ]; then $(MAKE) clean; else rm -rf build/; rm -f Nasdacoin-qt; fi
+	cd src; $(MAKE) -f makefile.unix clean
+
+override_dh_auto_configure:
+	qmake Nasdacoin-qt.pro USE_ASM=1 USE_LEVELDB=1
+
+# Ensure wrapper is set executable
+binary-post-install/Nasdacoind:
+	chmod +x $(cdbs_curdestdir)usr/bin/Nasdacoind
+binary-post-install/Nasdacoin-qt:
+	chmod +x $(cdbs_curdestdir)usr/bin/Nasdacoin-qt

@@ -1,0 +1,68 @@
+#!/bin/sh
+
+# PROVIDE: Nasdacoin
+# REQUIRE: LOGIN
+# KEYWORD: shutdown
+
+#
+# Add the following lines to /etc/rc.conf.local or /etc/rc.conf
+# to enable this service:
+#
+# Nasdacoin_enable (bool): Set to NO by default. Set this variable to YES if you want to enable Nasdacoin service.
+# Nasdacoin_config (path): Set to /usr/local/etc/Nasdacoin.conf by default.
+# Nasdacoin_user:  The user account Nasdacoin daemon runs as. It uses 'root' user by default.
+# Nasdacoin_group: The group account Nasdacoin daemon runs as. It uses 'wheel' group by default.
+# Nasdacoin_datadir (str): Default to "/var/db/Nasdacoin". Base data directory.
+
+. /etc/rc.subr
+
+name=Nasdacoin
+rcvar=Nasdacoin_enable
+
+: ${Nasdacoin_enable:=NO}
+: ${Nasdacoin_config=/usr/local/etc/Nasdacoin.conf}
+: ${Nasdacoin_datadir=/var/db/Nasdacoin}
+: ${Nasdacoin_user="root"}
+: ${Nasdacoin_group="wheel"}
+
+required_files=${Nasdacoin_config}
+command=/usr/local/bin/Nasdacoind
+Nasdacoin_chdir=${Nasdacoin_datadir}
+pidfile="${Nasdacoin_datadir}/Nasdacoind.pid"
+stop_cmd=Nasdacoin_stop
+command_args="-conf=${Nasdacoin_config} -datadir=${Nasdacoin_datadir} -daemon -pid=${pidfile}"
+start_precmd="${name}_prestart"
+
+Nasdacoin_create_datadir()
+{
+	echo "Creating data directory"
+	eval mkdir -p ${Nasdacoin_datadir}
+	[ $? -eq 0 ] && chown -R ${Nasdacoin_user}:${Nasdacoin_group} ${Nasdacoin_datadir}
+}
+
+Nasdacoin_prestart()
+{
+	if [ ! -d "${Nasdacoin_datadir}/." ]; then
+		Nasdacoin_create_datadir || return 1
+	fi
+}
+
+Nasdacoin_requirepidfile()
+{
+	if [ ! "0`check_pidfile ${pidfile} ${command}`" -gt 1 ]; then
+		echo "${name} not running? (check $pidfile)."
+		exit 1
+	fi
+}
+
+Nasdacoin_stop()
+{
+    Nasdacoin_requirepidfile
+
+	echo "Stopping ${name}."
+	eval ${command} -conf=${Nasdacoin_config} -datadir=${Nasdacoin_datadir} stop
+	wait_for_pids ${rc_pid}
+}
+
+load_rc_config $name
+run_rc_command "$1"

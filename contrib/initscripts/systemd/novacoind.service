@@ -1,0 +1,11 @@
+[Unit]
+Description=Nasdacoin daemon serivce
+After=network.target
+
+[Service]
+Type=simple
+User=Nasdacoin
+ExecStart=/opt/Nasdacoin/Nasdacoind
+
+[Install]
+WantedBy=multi-user.target

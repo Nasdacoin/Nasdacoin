@@ -1,0 +1,2 @@
+debian/bin/Nasdacoind usr/bin
+src/Nasdacoind usr/lib/Nasdacoin

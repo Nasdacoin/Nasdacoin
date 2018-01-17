@@ -1,0 +1,24 @@
+src/*.exe
+src/Nasdacoind
+src/build.h
+.*.swp
+*.*~*
+*.bak
+*.rej
+*.orig
+*.o
+*.patch
+.Nasdacoin
+#compilation and Qt preprocessor part
+*.qm
+Makefile
+Nasdacoin-qt
+#resources cpp
+qrc_*.cpp
+#qt creator
+*.pro.user
+#mac specific
+.DS_Store
+build
+
+!src/leveldb/Makefile

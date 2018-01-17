@@ -1,0 +1,9 @@
+Building Nasdacoin
+
+See doc/readme-qt.rst for instructions on building Nasdacoin Qt,
+the intended-for-end-users, nice-graphical-interface, reference
+implementation of Nasdacoin.
+
+See doc/build-*.txt for instructions on building Nasdacoind,
+the intended-for-services, no-graphical-interface, reference
+implementation of Nasdacoin.

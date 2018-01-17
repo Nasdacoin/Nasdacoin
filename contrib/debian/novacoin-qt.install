@@ -1,0 +1,5 @@
+Nasdacoin-qt usr/bin
+share/pixmaps/Nasdacoin32.xpm usr/share/pixmaps
+share/pixmaps/Nasdacoin80.xpm usr/share/pixmaps
+debian/Nasdacoin-qt.desktop usr/share/applications
+debian/Nasdacoin-qt.protocol usr/share/kde4/services/

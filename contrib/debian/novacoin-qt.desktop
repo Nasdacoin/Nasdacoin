@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Nasdacoin
+Comment=Nasdacoin P2P Cryptocurrency
+Comment[ru]=Nasdacoin, P2P криптовалюта
+Comment[fr]=Nasdacoin, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=Nasdacoin, eşten eşe kriptografik sanal para birimi
+Exec=/usr/bin/Nasdacoin-qt
+Terminal=false
+Type=Application
+Icon=/usr/share/pixmaps/Nasdacoin80.xpm
+MimeType=x-scheme-handler/Nasdacoin;
+Categories=Office;
